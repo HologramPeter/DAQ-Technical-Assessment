@@ -5,6 +5,8 @@
 
 ![alt text](image.png)
 
+<div style="page-break-after: always;"></div>
+
 - **Connection** MQTT via AWS IoT Core and Lambda
 - **Description**
 Data are recorded and converted to MsgPacks by station firmware (similar to the onboard firmware).
@@ -18,8 +20,9 @@ MsgPacks are transmitted to AWS and relayed to other services for usage and logg
   - **Secure** AWS IoT certificates ensures only authenicated devices can send/receive data.
   - **Low Cost** On top of MQTT having a lower data transfer cost. The employment of AWS Lambda also alleviate the cost of setting
   up additional EC2 instance servers for data processing.
-  - **OTA update** OTA firmware updates can also be done by MQTT after establishing some protocols. Firmware files can be uploaded to S3 bucket
-  either by developers through API gateways then initiated manually/automatically by publishing to corresponding MQTT topic(s).
+  - **OTA update** OTA firmware updates can also be done by MQTT after establishing some protocols. Firmware files can be uploaded to S3 bucket either by developers through API gateways then initiated manually/automatically by publishing to corresponding MQTT topic(s).
+  - **OTA update(extra)** For better control of firmware versions, may employ ECS instances for users to issue commands though web/mobile applications. This can be deployed though docker images to different availability zones as per the original diagram.
+
 
 ## Services Included
 - **IoT Core**
@@ -36,6 +39,13 @@ MsgPacks are transmitted to AWS and relayed to other services for usage and logg
 - **S3 bucket**
   - **Usages**
     - Storing OTA firmware files.
+
+- **ECS (optional, not shown in diagram)**
+  - **Usages**
+    - User application for requests/commands
+    - May be used for issuing OTA requests by getting the specified firmware version from S3 bucket and forward to lambda for MQTT processing.
+
+<div style="page-break-after: always;"></div>
 
 ## Terraform
 The deployment of services mentioned can be added on to the existing terraform project.
