@@ -6,17 +6,19 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 
 const WS_URL = "ws://localhost:8080";
 
-interface VehicleData {
-  battery_temperature: number;
-  timestamp: number;
+interface VehicleInfo{
+  is_valid: boolean;
+  last_battery_temperature: number;
+  last_timestamp: number;
 }
 
 function App() {
-  const [temperature, setTemperature] = useState<number>(0);
+  const [isValid, setIsValid] = useState<boolean>(false);
+  const [lastTemperature, setLastTemperature] = useState<number>(-500);
   const {
     lastJsonMessage,
     readyState,
-  }: { lastJsonMessage: VehicleData | null; readyState: ReadyState } =
+  }: { lastJsonMessage: VehicleInfo | null; readyState: ReadyState } =
     useWebSocket(WS_URL, {
       share: false,
       shouldReconnect: () => true,
@@ -40,9 +42,10 @@ function App() {
     if (lastJsonMessage === null) {
       return;
     }
-    setTemperature(lastJsonMessage["battery_temperature"]);
+    setLastTemperature(lastJsonMessage["last_battery_temperature"]);
+    setIsValid(lastJsonMessage["is_valid"]);
   }, [lastJsonMessage]);
-
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -52,7 +55,7 @@ function App() {
           alt="Redback Racing Logo"
         />
         <p className="value-title">Live Battery Temperature</p>
-        <LiveValue temp={temperature} />
+        <LiveValue isValid={isValid} lastValue={lastTemperature}  />
       </header>
     </div>
   );

@@ -19,6 +19,16 @@
   padding: 5%;
 }
 
+/* make the display half visible */
+.invalid{
+  opacity: 0.8;
+}
+
+/* make the words smaller */
+.remarks{
+  font-size: calc(20px + 2vmin);
+}
+
 .redback-logo {
   max-width: calc(200px + 1vmin);
   display: flex;
