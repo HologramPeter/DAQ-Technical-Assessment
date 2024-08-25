@@ -19,3 +19,7 @@ Suggestion for own work:
 - display the timestamp in some way for better understanding of connection status.
 
 ## Cloud
+
+- Base on previous experience, MQTT and IoT enables easy and efficient management of multiple devices
+- Might have to dig deeper into the set up of auto-signing of IoT certificates to increase security level
+- During deployment of terraform, may be important to try the configuration in insolated environemnts for better management of budgets.
